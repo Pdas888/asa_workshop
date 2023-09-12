@@ -39,8 +39,10 @@ def generate_sky_pos()
       ras.append(ra + uniform(-1,1))
       decs.append(dec + uniform(-1,1))
   return ras, decs
+
 def main()
-  
+  ras, decs = generate_sky_pos()
+  ras, decs = clip_to_radius(ra, dec,ras,decs)
   
   # now write these to a csv file for use by my other program
   with open('catalog.csv','w') as f:
