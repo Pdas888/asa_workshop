@@ -1,12 +1,13 @@
 #! /usr/bin/env python
 # Determine Andromeda location in ra/dec degrees
-
+# changing
 # from wikipedia
-
+from numpy.random import uniform
 from random import *
 # convert to decimal degrees
 
 from math import cos, sin, pi
+
 
 
 def get_radec():
@@ -43,6 +44,28 @@ def clip_to_radius(ra, dec,ras,decs):
       output_decs.append(dec_1)
   return output_ras, output_decs
 
+def make_stars(ra, dec, nsrc=NSRC):
+    """
+    Generate NSRC stars within 1 degree of the given ra/dec
+
+    Parameters
+    ----------
+    ra,dec : float
+        The ra and dec in degrees for the central location.
+    nsrc : int
+        The number of star locations to generate
+    
+    Returns
+    -------
+    ras, decs : list
+        A list of ra and dec coordinates.
+    """
+    ras = []
+    decs = []
+    for _ in range(nsrc):
+        ras.append(ra + uniform(-1,1))
+        decs.append(dec + uniform(-1,1))
+    return ras, decs
 
 
 def generate_sky_pos():
