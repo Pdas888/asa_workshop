@@ -25,5 +25,5 @@ setup(
     install_requires=get_requirements(),
     python_requires='>=3.8',
     scripts=['scripts/runme'],
-    entry_points={'console_scripts':['hello_world=mymodule.submod1:hello_world']}
+    entry_points={'console_scripts':['sky_sim=mymodule.sky_sim:main',]}
 )
