@@ -14,7 +14,7 @@ def clip_to_radius()
 
 def generate)sky_pos()
   
-  RA = '00:42:44.3'
+  RA = '00:22:44.3'
   DEC = '41:16:09'
   d, m, s = DEC.split(':')
   dec = int(d)+int(m)/60+float(s)/3600
