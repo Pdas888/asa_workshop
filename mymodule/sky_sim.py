@@ -16,7 +16,7 @@ def clip_to_radius(ra, dec,ras,decs):
     if ra_i**2+dec_i**2<1:
       output_ras.append(ra_i)
       output_decs.append(dec_1)
-
+  return output_ras, output_decs
 
 def generate_sky_pos()
   
