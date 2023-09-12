@@ -5,11 +5,19 @@
 
 from random import *
 # convert to decimal degrees
+from random import order
 from math import cos, sin, pi
 
+NSRC=1000
+def clip_to_radius(ra, dec,ras,decs):
+  output_ras=[]
+  output_decs=[]
+  for ra_i, dec_i in zip(ras,decs)
+    if ra_i**2+dec_i**2<1:
+      output_ras.append(ra_i)
+      output_decs.append(dec_1)
+  return output_ras, output_decs
 
-def clip_to_radius():
-  pass
 
 
 def generate_sky_pos():
@@ -32,7 +40,11 @@ def generate_sky_pos():
   for i in range(NSRC):
       ras.append(ra + uniform(-1,1))
       decs.append(dec + uniform(-1,1))
-  
+  return ras, decs
+
+def main()
+  ras, decs = generate_sky_pos()
+  ras, decs = clip_to_radius(ra, dec,ras,decs)
   
   # now write these to a csv file for use by my other program
   with open('catalog.csv','w') as f:
