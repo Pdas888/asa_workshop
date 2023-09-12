@@ -3,16 +3,16 @@
 
 # from wikipedia
 
-
+from random import *
 # convert to decimal degrees
 from math import cos, sin, pi
 
 
-def clip_to_radius()
+def clip_to_radius():
   pass
 
 
-def generate)sky_pos()
+def generate_sky_pos():
   
   RA = '00:22:44.3'
   DEC = '41:16:09'
@@ -26,7 +26,7 @@ def generate)sky_pos()
   NSRC = 1_000_000
   
   # make 1000 stars within 1 degree of Andromeda
-  from random import *
+  
   ras = []
   decs = []
   for i in range(NSRC):
