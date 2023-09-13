@@ -1,2 +1,2 @@
 [console_scripts]
-hello_world = mymodule.submod1:hello_world
+sky_sim = mymodule.sky_sim:main

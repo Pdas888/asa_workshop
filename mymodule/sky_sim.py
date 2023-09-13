@@ -4,11 +4,32 @@
 # from wikipedia
 from numpy.random import uniform
 from random import *
+import argparse
+import mymodule
 # convert to decimal degrees
 
 from math import cos, sin, pi
+NSRC=1000
 
+def skysim_parser():
+    """
+    Configure the argparse for skysim
 
+    Returns
+    -------
+    parser : argparse.ArgumentParser
+        The parser for skysim.
+    """
+    parser = argparse.ArgumentParser(prog='sky_sim', prefix_chars='-', description ="Simulate a sky")
+    parser.add_argument('--ra', dest = 'ra', type=float, default=None,
+                        help="Central ra (degrees) for the simulation location")
+    parser.add_argument('--version', action='version', version=f'%(prog)s {mymodule.__version__}')
+    
+    parser.add_argument('--dec', dest = 'dec', type=float, default=None,
+                        help="Central dec (degrees) for the simulation location")
+    parser.add_argument('--out', dest='out', type=str, default='catalog.csv',
+                        help='destination for the output catalog')
+    return parser
 
 def get_radec():
     """
@@ -38,7 +59,7 @@ def get_radec():
     ra = ra/cos(dec*pi/180)
     return ra,dec
 
-NSRC=1000
+
 def clip_to_radius(ra, dec,ras,decs):
   output_ras=[]
   output_decs=[]
@@ -95,6 +116,14 @@ def generate_sky_pos():
   return ras, decs
 
 def main():
+  parser = skysim_parser()
+  options = parser.parse_args()
+  if None in [options.ra, options.dec]:
+    ra, dec = get_radec()
+  else:
+    ra = options.ra
+    dec = options.dec
+        
   ras, decs = generate_sky_pos()
   ras, decs = clip_to_radius(ra, dec,ras,decs)
   
