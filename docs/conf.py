@@ -24,8 +24,4 @@ extensions = [
 
 # ...
 
-html_theme = 'alabaster'
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
-language = 'En'
+html_theme = 'sphinx_rtd_theme'
