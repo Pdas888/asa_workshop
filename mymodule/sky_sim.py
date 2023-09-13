@@ -14,7 +14,11 @@ def get_radec():
     """
     Generate the ra/dec coordinates of Andromeda
     in decimal degrees.
-
+    Inputs
+    ------
+    andromeda_ra : RA of Andromeda galaxy in hh:mm:ss
+    andromeda_dec: DEC of Andromeda in dd:mm:ss
+    
     Returns
     -------
     ra : float
