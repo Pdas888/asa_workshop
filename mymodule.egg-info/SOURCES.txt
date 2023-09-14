@@ -1,6 +1,7 @@
 setup.py
 mymodule/__init__.py
 mymodule/sky_sim.py
+mymodule/sky_sim_opt.py
 mymodule/submod1.py
 mymodule/submod2.py
 mymodule.egg-info/PKG-INFO
