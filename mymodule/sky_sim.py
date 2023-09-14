@@ -2,9 +2,10 @@
 # Determine Andromeda location in ra/dec degrees
 # changing
 # from wikipedia
-from numpy.random import uniform
+
 from random import *
 import argparse
+import logging
 import mymodule
 # convert to decimal degrees
 
@@ -29,6 +30,9 @@ def skysim_parser():
                         help="Central dec (degrees) for the simulation location")
     parser.add_argument('--out', dest='out', type=str, default='catalog.csv',
                         help='destination for the output catalog')
+    parser.add_argument('--logging', type=str, default='INFO',
+                        help='Logging level from (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
+    
     return parser
 
 def get_radec():
@@ -60,11 +64,12 @@ def get_radec():
     return ra,dec
 
 
-def clip_to_radius(ra, dec,ras,decs):
+def clip_to_radius(ra, dec,ras,decs, log = logging.getLogger("sky_sim")):
   output_ras=[]
   output_decs=[]
   for ra_i, dec_i in zip(ras,decs):
     if ra_i**2+dec_i**2<1:
+      log.debug("within a degree")
       output_ras.append(ra_i)
       output_decs.append(dec_1)
   return output_ras, output_decs
@@ -114,21 +119,42 @@ def generate_sky_pos():
       ras.append(ra + uniform(-1,1))
       decs.append(dec + uniform(-1,1))
   return ras, decs
+  
+  
 
 def main():
   parser = skysim_parser()
   options = parser.parse_args()
+  loglevels = {
+    'DEBUG': logging.DEBUG,
+    'INFO': logging.INFO,
+    'WARNING': logging.WARNING,
+    'ERROR': logging.ERROR,
+    'CRITICAL': logging.CRITICAL
+  }
+  logging.basicConfig(
+    format="%(name)s:%(levelname)s %(message)s",
+    level=loglevels[options.logging]
+  )
+  log = logging.getLogger("sky_sim")
+
   if None in [options.ra, options.dec]:
     ra, dec = get_radec()
+    log.error("No ra and dec")
   else:
     ra = options.ra
     dec = options.dec
+    log.INFO("correct")
         
   ras, decs = generate_sky_pos()
-  ras, decs = clip_to_radius(ra, dec,ras,decs)
-  
+  ras, decs = clip_to_radius(ra, dec,ras,decs, log=log)
+  log.warning("This is warning")
   # now write these to a csv file for use by my other program
-  with open('catalog.csv','w') as f:
-    print("id,ra,dec", file=f)
-    for i in range(NSRC):
-        print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}".format(i, ras[i], decs[i]), file=f)
+  with open(options.out,'w') as f:
+      print("id,ra,dec", file=f)
+      for i in range(len(ras)):
+          print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
+  print(f"Wrote {options.out}")
+  
+if __name__ == "__main__":
+    main()
